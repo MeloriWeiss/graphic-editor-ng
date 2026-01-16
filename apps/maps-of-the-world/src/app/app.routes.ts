@@ -12,29 +12,34 @@ import { ErrorComponent } from '@wm/common-ui';
 export const routes: Routes = [
   {
     path: '',
-    component: BaseLayoutComponent,
     children: [
       {
         path: '',
-        redirectTo: 'profile/me',
-        pathMatch: 'full',
+        component: BaseLayoutComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'profile/me',
+            pathMatch: 'full',
+          },
+          {
+            path: 'profile/:id',
+            loadChildren: () => import('@wm/profile').then((m) => m.profileRoutes),
+          },
+          {
+            path: 'forum',
+            loadChildren: () => import('@wm/forum').then((m) => m.forumRoutes),
+          },
+          {
+            path: 'mods',
+            loadChildren: () => import('@wm/mods').then((m) => m.modsRoutes),
+          },
+        ]
       },
       {
-        path: 'profile/:id',
-        loadChildren: () => import('@wm/profile').then((m) => m.profileRoutes),
+        path: 'workshop',
+        loadComponent: () => import('@wm/workshop').then((m) => m.WorkshopPageComponent)
       },
-      {
-        path: 'forum',
-        loadChildren: () => import('@wm/forum').then((m) => m.forumRoutes),
-      },
-      {
-        path: 'mods',
-        loadChildren: () => import('@wm/mods').then((m) => m.modsRoutes),
-      },
-      // {
-      //   path: 'workshop',
-      //   loadComponent: () => import('@wm/workshop').then((m) => m.WorkshopPageComponent)
-      // },
     ],
     canActivate: [canActivateAuth],
     title: 'Maps of the world',

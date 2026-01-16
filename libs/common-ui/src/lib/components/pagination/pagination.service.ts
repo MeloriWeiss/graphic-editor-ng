@@ -20,9 +20,9 @@ export class PaginationService {
   pagesList = computed(() => {
     const maxPage = this.maxPage();
 
-    if (!maxPage) return;
+    if (!maxPage) return [];
 
-    const result = [];
+    const result: number[] = [];
     for (let i = 1; i <= maxPage; i++) {
       result.push(i);
     }

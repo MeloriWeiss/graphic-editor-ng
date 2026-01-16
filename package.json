@@ -6,8 +6,9 @@
     "start": "nx run maps-of-the-world:serve --open",
     "build": "nx build maps-of-the-world",
     "doc": "compodoc -p compodoc.json",
-    "watch": "nx build --watch --configuration development",
-    "test": "nx test"
+    "lint": "nx run-many --target=lint --all",
+    "test": "nx run-many --target=test --all",
+    "watch": "nx build --watch --configuration development"
   },
   "private": true,
   "dependencies": {

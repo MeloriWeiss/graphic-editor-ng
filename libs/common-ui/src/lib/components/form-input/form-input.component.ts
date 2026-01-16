@@ -1,21 +1,31 @@
-import {ChangeDetectionStrategy, Component, effect, forwardRef, input, signal} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  forwardRef,
+  input,
+  signal,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'wm-form-input',
-  imports: [
-    ReactiveFormsModule
-  ],
+  imports: [ReactiveFormsModule],
   templateUrl: './form-input.component.html',
   styleUrl: './form-input.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => FormInputComponent)
-    }
+      useExisting: forwardRef(() => FormInputComponent),
+    },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormInputComponent implements ControlValueAccessor {
   type = input('text');
@@ -51,10 +61,7 @@ export class FormInputComponent implements ControlValueAccessor {
     this.disabled.set(isDisabled);
   }
 
-  onChange(value: string | null) {
-    console.log(this.type);
-  }
+  onChange(value: string | null) {}
 
-  onTouched() {
-  }
+  onTouched() {}
 }
