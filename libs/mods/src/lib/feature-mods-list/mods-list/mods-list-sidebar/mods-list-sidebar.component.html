@@ -8,7 +8,7 @@
       <ul class="sidebar-content-list">
         @for (filter of modsFilters$ | async; track filter.name) {
           <li>
-            <wm-mods-filters-item [filter]="filter"></wm-mods-filters-item>
+            <ge-mods-filters-item [filter]="filter"></ge-mods-filters-item>
           </li>
         }
       </ul>

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import { NavigationManagerComponent } from '@wm/shared';
+import { NavigationManagerComponent } from '@ge/shared';
 
 @Component({
   selector: 'app-root',

@@ -4,6 +4,7 @@ import { fromEvent, merge, switchMap, takeUntil } from 'rxjs';
 import { WorkshopCoordsService } from './workshop-coords.service';
 import { WorkshopToolsService } from './workshop-tools.service';
 import { WorkshopCanvasService } from './workshop-canvas.service';
+import { WorkshopCanvasManagerService } from './workshop-canvas-manager.service';
 
 @Injectable()
 export class WorkshopDrawService {
@@ -11,6 +12,7 @@ export class WorkshopDrawService {
   #workshopCoordsService = inject(WorkshopCoordsService);
   #workshopToolsService = inject(WorkshopToolsService);
   #workshopCanvasService = inject(WorkshopCanvasService);
+  #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
 
   drawMouseButton = this.#workshopSettingsService.drawMouseButton;
 

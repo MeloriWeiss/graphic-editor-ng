@@ -36,7 +36,7 @@ export class SelectTool implements Tool {
 
         if (selected) this.#selectedShapes.push(shape);
       }
-      this.#workshopCanvasManagerService.redraw();
+      this.#workshopCanvasManagerService.render();
 
       return;
     }
@@ -58,7 +58,7 @@ export class SelectTool implements Tool {
 
       if (selected) this.#selectedShapes.push(shape);
     }
-    this.#workshopCanvasManagerService.redraw();
+    this.#workshopCanvasManagerService.render();
 
     this.#selectionRect = {
       x: startPoint.x,
@@ -69,6 +69,8 @@ export class SelectTool implements Tool {
   }
 
   draw(ctx: CanvasRenderingContext2D, newPoint: Point) {
+    this.#workshopCanvasManagerService.redraw();
+
     if (this.#selectedShapes.length && !this.#selection) {
       for (const shape of this.#workshopShapesService.shapes) {
         if (!shape.selected) continue;
@@ -78,7 +80,7 @@ export class SelectTool implements Tool {
           y: newPoint.y - this.#lastY,
         });
       }
-      this.#workshopCanvasManagerService.redraw();
+      this.#workshopCanvasManagerService.render();
     }
 
     this.#lastX = newPoint.x;
@@ -95,7 +97,7 @@ export class SelectTool implements Tool {
     this.#selectionRect.width = rectWidth;
     this.#selectionRect.height = rectHeight;
 
-    this.#workshopCanvasManagerService.redraw();
+    this.#workshopCanvasManagerService.render();
 
     rectWidth = Math.abs(rectWidth);
     rectHeight = Math.abs(rectHeight);
@@ -128,7 +130,7 @@ export class SelectTool implements Tool {
 
     this.#selection = false;
 
-    this.#workshopCanvasManagerService.redraw();
+    this.#workshopCanvasManagerService.render();
 
     this.#selectionRect = null;
   }

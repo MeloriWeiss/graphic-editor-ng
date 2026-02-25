@@ -3,7 +3,7 @@ import { NavigationHistoryService } from './navigation-history.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'wm-navigation-manager',
+  selector: 'ge-navigation-manager',
   imports: [],
   templateUrl: './navigation-manager.component.html',
   styleUrl: './navigation-manager.component.scss',

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { DateDiffPipe, SvgComponent } from '@wm/common-ui';
-import { Discussion } from '@wm/data-access/forum';
+import { DateDiffPipe, SvgComponent } from '@ge/common-ui';
+import { Discussion } from '@ge/data-access/forum';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'wm-discussion-card',
+  selector: 'ge-discussion-card',
   imports: [SvgComponent, RouterLink, DateDiffPipe],
   templateUrl: './discussion-card.component.html',
   styleUrl: './discussion-card.component.scss',

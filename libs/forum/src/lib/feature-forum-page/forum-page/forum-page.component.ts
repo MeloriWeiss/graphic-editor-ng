@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DeskListComponent } from '@wm/common-ui';
+import { DeskListComponent } from '@ge/common-ui';
 import { ForumSidebarComponent } from '../../ui';
 import { ForumPostComponent } from './forum-post/forum-post.component';
 import { ForumPostCommentsComponent } from './forum-post-comments/forum-post-comments.component';
 
 @Component({
-  selector: 'wm-forum-page',
+  selector: 'ge-forum-page',
   imports: [
     DeskListComponent,
     ForumSidebarComponent,

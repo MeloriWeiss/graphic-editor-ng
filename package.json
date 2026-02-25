@@ -1,10 +1,10 @@
 {
-  "name": "maps-of-the-world",
+  "name": "graphic-editor",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "nx run maps-of-the-world:serve --open",
-    "build": "nx build maps-of-the-world",
+    "start": "nx run graphic-editor:serve --open",
+    "build": "nx build graphic-editor",
     "doc": "compodoc -p compodoc.json",
     "lint": "nx run-many --target=lint --all",
     "test": "nx run-many --target=test --all",
@@ -69,5 +69,9 @@
     "ts-node": "10.9.1",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.40.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/MeloriWeiss/graphic-editor-ng.git",
+  "author": "Evgeniy Nazarov <zentorno.2000@mail.ru>",
+  "license": "MIT"
 }

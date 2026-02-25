@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormInputComponent,
   LabeledFormFieldWrapperComponent,
-} from '@wm/common-ui';
-import { LabeledCheckboxComponent } from '@wm/common-ui';
+} from '@ge/common-ui';
+import { LabeledCheckboxComponent } from '@ge/common-ui';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'wm-signup-page',
+  selector: 'ge-signup-page',
   imports: [
     FormInputComponent,
     LabeledCheckboxComponent,

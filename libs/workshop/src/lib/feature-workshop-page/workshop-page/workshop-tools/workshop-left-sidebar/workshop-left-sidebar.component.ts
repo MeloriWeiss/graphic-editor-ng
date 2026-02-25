@@ -3,7 +3,7 @@ import { WorkshopTools } from '../../../../consts';
 import { WorkshopToolsService } from '../../../../services';
 
 @Component({
-  selector: 'wm-workshop-left-sidebar',
+  selector: 'ge-workshop-left-sidebar',
   imports: [],
   templateUrl: './workshop-left-sidebar.component.html',
   styleUrl: './workshop-left-sidebar.component.scss',

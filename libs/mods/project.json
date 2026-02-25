@@ -2,7 +2,7 @@
   "name": "mods",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/mods/src",
-  "prefix": "wm",
+  "prefix": "ge",
   "projectType": "library",
   "tags": [],
   "targets": {

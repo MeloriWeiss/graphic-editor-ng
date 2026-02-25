@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { WorkshopCanvasComponent } from './workshop-canvas/workshop-canvas.component';
 
 @Component({
-  selector: 'wm-workshop-workspace',
+  selector: 'ge-workshop-workspace',
   imports: [FormsModule, WorkshopCanvasComponent],
   templateUrl: './workshop-workspace.component.html',
   styleUrl: './workshop-workspace.component.scss',

@@ -2,7 +2,7 @@
   "name": "layout",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/layout/src",
-  "prefix": "wm",
+  "prefix": "ge",
   "projectType": "library",
   "tags": [],
   "targets": {

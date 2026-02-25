@@ -23,6 +23,19 @@ export class WorkshopCanvasManagerService {
 
   redraw() {
     const ctx = this.#workshopCanvasService.ctx;
+
+    this.clearCanvas();
+
+    const zoom = this.#workshopCoordsService.zoom;
+
+    ctx.translate(this.#workshopCoordsService.cameraX, this.#workshopCoordsService.cameraY);
+    ctx.scale(zoom, zoom);
+
+    this.render();
+  }
+
+  render() {
+    const ctx = this.#workshopCanvasService.ctx;
     const zoom = this.#workshopCoordsService.zoom;
 
     // ТЕСТОВОЕ ПОЛЕ ---------------------------------

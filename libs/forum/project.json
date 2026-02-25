@@ -2,7 +2,7 @@
   "name": "forum",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/forum/src",
-  "prefix": "wm",
+  "prefix": "ge",
   "projectType": "library",
   "tags": [],
   "targets": {

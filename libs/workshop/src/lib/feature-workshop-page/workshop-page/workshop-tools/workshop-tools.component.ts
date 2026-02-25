@@ -16,7 +16,7 @@ import { WorkshopLeftSidebarComponent } from './workshop-left-sidebar/workshop-l
 import { WorkshopRightSidebarComponent } from './workshop-right-sidebar/workshop-right-sidebar.component';
 
 @Component({
-  selector: 'wm-workshop-tools',
+  selector: 'ge-workshop-tools',
   imports: [
     WorkshopWorkspaceComponent,
     ReactiveFormsModule,

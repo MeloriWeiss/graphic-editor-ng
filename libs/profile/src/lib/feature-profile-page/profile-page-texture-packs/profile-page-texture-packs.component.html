@@ -4,7 +4,7 @@
 
     <div class="profile__cards">
       @for (mode of mods$ | async; track mode.id) {
-        <wm-mode-card [mode]="mode"></wm-mode-card>
+        <ge-mode-card [mode]="mode"></ge-mode-card>
       }
     </div>
   </div>
@@ -14,7 +14,7 @@
 
     <div class="profile__cards">
       @for (mode of mods$ | async; track mode.id) {
-        <wm-mode-card [mode]="mode"></wm-mode-card>
+        <ge-mode-card [mode]="mode"></ge-mode-card>
       }
     </div>
   </div>

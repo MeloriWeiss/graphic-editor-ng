@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
-import { CollapsibleDirective, SvgComponent } from '@wm/common-ui';
+import { CollapsibleDirective, SvgComponent } from '@ge/common-ui';
 
 @Component({
-  selector: 'wm-mods-filters-item',
+  selector: 'ge-mods-filters-item',
   imports: [CollapsibleDirective, SvgComponent],
   templateUrl: './mods-filters-item.component.html',
   styleUrl: './mods-filters-item.component.scss',

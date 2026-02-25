@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SearchInputComponent, SvgComponent } from '@wm/common-ui';
+import { SearchInputComponent, SvgComponent } from '@ge/common-ui';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'wm-header',
+  selector: 'ge-header',
   imports: [
     SearchInputComponent,
     SvgComponent,

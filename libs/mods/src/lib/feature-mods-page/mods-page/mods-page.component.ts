@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs';
-import { MockService } from '@wm/data-access/mock/mock.service';
+import { MockService } from '@ge/data-access/mock/mock.service';
 import { AsyncPipe, Location } from '@angular/common';
-import { ImagesSliderComponent, SvgComponent } from '@wm/common-ui';
+import { ImagesSliderComponent, SvgComponent } from '@ge/common-ui';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { NavigationHistoryService } from '@wm/shared';
+import { NavigationHistoryService } from '@ge/shared';
 
 @Component({
-  selector: 'wm-mods-page',
+  selector: 'ge-mods-page',
   standalone: true,
   imports: [AsyncPipe, SvgComponent, ImagesSliderComponent],
   templateUrl: './mods-page.component.html',

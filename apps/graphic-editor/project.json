@@ -1,5 +1,5 @@
 {
-  "name": "maps-of-the-world",
+  "name": "graphic-editor",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "generators": {
@@ -8,19 +8,19 @@
       "skipTests": true
     }
   },
-  "sourceRoot": "apps/maps-of-the-world/src",
+  "sourceRoot": "apps/graphic-editor/src",
   "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "options": {
-        "outputPath": "dist/apps/maps-of-the-world",
-        "index": "apps/maps-of-the-world/src/index.html",
-        "browser": "apps/maps-of-the-world/src/main.ts",
+        "outputPath": "dist/apps/graphic-editor",
+        "index": "apps/graphic-editor/src/index.html",
+        "browser": "apps/graphic-editor/src/main.ts",
         "polyfills": [
           "zone.js"
         ],
-        "tsConfig": "apps/maps-of-the-world/tsconfig.app.json",
+        "tsConfig": "apps/graphic-editor/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
@@ -31,7 +31,7 @@
         "styles": [
           "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
           "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
-          "apps/maps-of-the-world/src/styles.scss"
+          "apps/graphic-editor/src/styles.scss"
         ],
         "scripts": []
       },
@@ -66,10 +66,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "maps-of-the-world:build:production"
+          "buildTarget": "graphic-editor:build:production"
         },
         "development": {
-          "buildTarget": "maps-of-the-world:build:development"
+          "buildTarget": "graphic-editor:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -84,16 +84,16 @@
           "zone.js",
           "zone.js/testing"
         ],
-        "tsConfig": "apps/maps-of-the-world/tsconfig.spec.json",
+        "tsConfig": "apps/graphic-editor/tsconfig.spec.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/maps-of-the-world/public"
+            "input": "apps/graphic-editor/public"
           }
         ],
         "styles": [
-          "apps/maps-of-the-world/src/styles.scss"
+          "apps/graphic-editor/src/styles.scss"
         ],
         "scripts": []
       }

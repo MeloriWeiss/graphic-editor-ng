@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
-  selector: 'wm-labeled-checkbox',
+  selector: 'ge-labeled-checkbox',
   imports: [],
   templateUrl: './labeled-checkbox.component.html',
   styleUrl: './labeled-checkbox.component.scss',

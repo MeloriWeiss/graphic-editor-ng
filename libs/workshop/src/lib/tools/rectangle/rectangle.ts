@@ -22,7 +22,11 @@ export class RectangleTool implements Tool {
   strokeWidth = 1;
   opacity = 1;
 
-  startDrawing(e: MouseEvent, ctx: CanvasRenderingContext2D, startPoint: Point) {
+  startDrawing(
+    e: MouseEvent,
+    ctx: CanvasRenderingContext2D,
+    startPoint: Point
+  ) {
     ctx.lineWidth = this.strokeWidth;
     ctx.strokeStyle = this.strokeColor;
     ctx.fillStyle = this.fillColor;
@@ -40,18 +44,20 @@ export class RectangleTool implements Tool {
       fillColor: this.fillColor,
       strokeColor: this.strokeColor,
       strokeWidth: this.strokeWidth,
-      opacity: this.opacity
+      opacity: this.opacity,
     });
   }
 
   draw(ctx: CanvasRenderingContext2D, newPoint: Point) {
     if (!this.#currentRect) return;
 
+    this.#workshopCanvasManagerService.redraw();
+
     let rectWidth = newPoint.x - this.#startX;
     let rectHeight = newPoint.y - this.#startY;
 
     if (rectWidth < 0) {
-        this.#currentRect.x = newPoint.x
+      this.#currentRect.x = newPoint.x;
     }
     if (rectHeight < 0) {
       this.#currentRect.y = newPoint.y;
@@ -63,13 +69,23 @@ export class RectangleTool implements Tool {
     this.#currentRect.width = rectWidth;
     this.#currentRect.height = rectHeight;
 
-    this.#workshopCanvasManagerService.redraw();
+    this.#workshopCanvasManagerService.render();
 
     ctx.fillStyle = this.fillColor;
 
     ctx.beginPath();
-    ctx.fillRect(this.#currentRect.x, this.#currentRect.y, rectWidth, rectHeight);
-    ctx.strokeRect(this.#currentRect.x, this.#currentRect.y, rectWidth, rectHeight);
+    ctx.fillRect(
+      this.#currentRect.x,
+      this.#currentRect.y,
+      rectWidth,
+      rectHeight
+    );
+    ctx.strokeRect(
+      this.#currentRect.x,
+      this.#currentRect.y,
+      rectWidth,
+      rectHeight
+    );
   }
 
   stopDrawing() {

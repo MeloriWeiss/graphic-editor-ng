@@ -14,7 +14,7 @@
     <span>{{ isOpened() ? '...' : filter.count }}</span>
     @if (filter.extras.length) {
       <div
-        wmCollapsible
+        geCollapsible
         [isOpened]="isOpened()"
         class="extra-filters"
       >

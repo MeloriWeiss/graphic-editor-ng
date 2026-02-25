@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SvgComponent } from '@wm/common-ui';
+import { SvgComponent } from '@ge/common-ui';
 
 @Component({
-  selector: 'wm-footer',
+  selector: 'ge-footer',
   imports: [RouterLink, SvgComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',

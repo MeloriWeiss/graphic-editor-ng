@@ -4,10 +4,10 @@ import {
   canActivateNonAuth,
   LoginPageComponent,
   SignupPageComponent,
-} from '@wm/auth';
-import { AuthLayoutComponent } from '@wm/layout/auth';
-import { BaseLayoutComponent } from '@wm/layout/base';
-import { ErrorComponent } from '@wm/common-ui';
+} from '@ge/auth';
+import { AuthLayoutComponent } from '@ge/layout/auth';
+import { BaseLayoutComponent } from '@ge/layout/base';
+import { ErrorComponent } from '@ge/common-ui';
 
 export const routes: Routes = [
   {
@@ -24,21 +24,21 @@ export const routes: Routes = [
           },
           {
             path: 'profile/:id',
-            loadChildren: () => import('@wm/profile').then((m) => m.profileRoutes),
+            loadChildren: () => import('@ge/profile').then((m) => m.profileRoutes),
           },
           {
             path: 'forum',
-            loadChildren: () => import('@wm/forum').then((m) => m.forumRoutes),
+            loadChildren: () => import('@ge/forum').then((m) => m.forumRoutes),
           },
           {
             path: 'mods',
-            loadChildren: () => import('@wm/mods').then((m) => m.modsRoutes),
+            loadChildren: () => import('@ge/mods').then((m) => m.modsRoutes),
           },
         ]
       },
       {
         path: 'workshop',
-        loadComponent: () => import('@wm/workshop').then((m) => m.WorkshopPageComponent)
+        loadComponent: () => import('@ge/workshop').then((m) => m.WorkshopPageComponent)
       },
     ],
     canActivate: [canActivateAuth],

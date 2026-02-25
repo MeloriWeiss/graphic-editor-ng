@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../index';
 
 @Component({
-  selector: 'wm-desk-list',
+  selector: 'ge-desk-list',
   imports: [ReactiveFormsModule, PaginationComponent],
   templateUrl: './desk-list.component.html',
   styleUrl: './desk-list.component.scss',

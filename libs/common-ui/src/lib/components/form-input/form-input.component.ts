@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'wm-form-input',
+  selector: 'ge-form-input',
   imports: [ReactiveFormsModule],
   templateUrl: './form-input.component.html',
   styleUrl: './form-input.component.scss',

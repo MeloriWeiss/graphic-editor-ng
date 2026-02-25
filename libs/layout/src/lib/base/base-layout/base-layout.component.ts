@@ -4,7 +4,7 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-  selector: 'wm-base-layout',
+  selector: 'ge-base-layout',
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './base-layout.component.html',
   styleUrl: './base-layout.component.scss',

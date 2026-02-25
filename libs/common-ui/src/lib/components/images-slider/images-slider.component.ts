@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { SvgComponent } from '../svg/svg.component';
-import { SliderItem } from '@wm/data-access/shared';
+import { SliderItem } from '@ge/data-access/shared';
 
 @Component({
-  selector: 'wm-images-slider',
+  selector: 'ge-images-slider',
   imports: [CarouselModule, SvgComponent],
   templateUrl: './images-slider.component.html',
   styleUrl: './images-slider.component.scss',

@@ -2,7 +2,7 @@
   "name": "workshop",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/workshop/src",
-  "prefix": "wm",
+  "prefix": "ge",
   "projectType": "library",
   "tags": [],
   "targets": {

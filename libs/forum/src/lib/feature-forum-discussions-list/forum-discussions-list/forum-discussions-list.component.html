@@ -1,16 +1,16 @@
-<wm-desk-list>
-  <wm-search-input
+<ge-desk-list>
+  <ge-search-input
     [formControl]="searchControl"
     searchControl
   >
     <svg icon="search" class="svg20"></svg>
-  </wm-search-input>
+  </ge-search-input>
 
-  <wm-forum-sidebar sidebar></wm-forum-sidebar>
+  <ge-forum-sidebar sidebar></ge-forum-sidebar>
 
   <ng-container cards>
     @for (discussion of discussions$ | async; track discussion.id) {
-      <wm-discussion-card [discussion]="discussion"></wm-discussion-card>
+      <ge-discussion-card [discussion]="discussion"></ge-discussion-card>
     }
   </ng-container>
-</wm-desk-list>
+</ge-desk-list>

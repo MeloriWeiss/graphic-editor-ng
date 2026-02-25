@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 
 @Component({
-  selector: 'wm-labeled-form-field-wrapper',
+  selector: 'ge-labeled-form-field-wrapper',
   imports: [],
   templateUrl: './labeled-form-field-wrapper.component.html',
   styleUrl: './labeled-form-field-wrapper.component.scss',

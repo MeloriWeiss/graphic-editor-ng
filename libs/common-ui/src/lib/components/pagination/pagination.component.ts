@@ -7,7 +7,7 @@ import { SvgComponent } from '../svg/svg.component';
 import { PaginationService } from './pagination.service';
 
 @Component({
-  selector: 'wm-pagination',
+  selector: 'ge-pagination',
   imports: [SvgComponent],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',

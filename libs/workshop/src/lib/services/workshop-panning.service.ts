@@ -71,8 +71,10 @@ export class WorkshopPanningService {
 
   resizeCanvas() {
     const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
+
     this.#width = window.innerWidth;
     this.#height = window.innerHeight;
+
     canvas.width = this.#width - 350;
     canvas.height = this.#height - 37;
 
@@ -141,15 +143,6 @@ export class WorkshopPanningService {
   }
 
   redraw() {
-    const ctx = this.#workshopCanvasService.ctx;
-
-    this.#workshopCanvasManagerService.clearCanvas();
-
-    const zoom = this.#workshopCoordsService.zoom;
-
-    ctx.translate(this.#workshopCoordsService.cameraX, this.#workshopCoordsService.cameraY);
-    ctx.scale(zoom, zoom);
-
     this.#workshopCanvasManagerService.redraw();
   }
 }

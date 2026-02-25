@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthService } from '@wm/data-access/auth';
+import { AuthService } from '@ge/data-access/auth';
 import {
   FormInputComponent,
   LabeledFormFieldWrapperComponent,
-} from '@wm/common-ui';
-import { LabeledCheckboxComponent } from '@wm/common-ui';
+} from '@ge/common-ui';
+import { LabeledCheckboxComponent } from '@ge/common-ui';
 import { Router, RouterLink } from '@angular/router';
 import {
   FormControl,
@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'wm-login-page',
+  selector: 'ge-login-page',
   imports: [
     FormInputComponent,
     LabeledFormFieldWrapperComponent,

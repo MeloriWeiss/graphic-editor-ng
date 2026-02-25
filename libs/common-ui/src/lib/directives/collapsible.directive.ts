@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[wmCollapsible]',
+  selector: '[geCollapsible]',
 })
 export class CollapsibleDirective implements AfterViewInit {
   #elementRef = inject(ElementRef);

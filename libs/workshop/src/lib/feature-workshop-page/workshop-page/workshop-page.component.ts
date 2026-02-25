@@ -13,7 +13,7 @@ import {
 } from '../../services';
 
 @Component({
-  selector: 'wm-workshop-page',
+  selector: 'ge-workshop-page',
   imports: [FormsModule, WorkshopToolsComponent],
   templateUrl: './workshop-page.component.html',
   styleUrl: './workshop-page.component.scss',

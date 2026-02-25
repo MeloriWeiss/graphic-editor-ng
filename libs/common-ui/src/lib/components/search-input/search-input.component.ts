@@ -15,7 +15,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'wm-search-input',
+  selector: 'ge-search-input',
   imports: [ReactiveFormsModule],
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss',

@@ -16,7 +16,7 @@ import {
 } from '../../../../services';
 
 @Component({
-  selector: 'wm-workshop-canvas',
+  selector: 'ge-workshop-canvas',
   imports: [FormsModule],
   templateUrl: './workshop-canvas.component.html',
   styleUrl: './workshop-canvas.component.scss',

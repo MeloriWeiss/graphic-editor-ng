@@ -4,19 +4,19 @@ import {
   PaginationService,
   SearchInputComponent,
   SvgComponent,
-} from '@wm/common-ui';
-import { MockService } from '@wm/data-access/mock/mock.service';
+} from '@ge/common-ui';
+import { MockService } from '@ge/data-access/mock/mock.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
-import { ModeCardComponent } from '@wm/common-ui';
+import { ModeCardComponent } from '@ge/common-ui';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModsListSidebarComponent } from './mods-list-sidebar/mods-list-sidebar.component';
 
 @Component({
-  selector: 'wm-mods-list',
+  selector: 'ge-mods-list',
   imports: [
     DeskListComponent,
     SearchInputComponent,
