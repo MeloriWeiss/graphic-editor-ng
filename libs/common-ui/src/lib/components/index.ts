@@ -9,6 +9,9 @@ import { DeskListComponent } from './desk-list/desk-list.component';
 import { PaginationService } from './pagination/pagination.service';
 import { ImagesSliderComponent } from './images-slider/images-slider.component';
 import { ModeCardComponent } from './mode-card/mode-card.component';
+import { ModalHostComponent } from './modal-host/modal-host.component';
+import { ModalService } from './base-modal/modal.service';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 export {
   FormInputComponent,
@@ -22,4 +25,7 @@ export {
   PaginationService,
   ImagesSliderComponent,
   ModeCardComponent,
+  ModalHostComponent,
+  ModalService,
+  ConfirmationModalComponent,
 };

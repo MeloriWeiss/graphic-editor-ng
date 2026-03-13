@@ -5,7 +5,7 @@ import { Point } from '../../interfaces';
 import { SelectionRect } from '../../tools';
 
 export class LineShape extends BaseShapeShape implements Line {
-  type = ShapesTypes.RECTANGLE;
+  type = ShapesTypes.LINE;
 
   points: Point[] = [];
 

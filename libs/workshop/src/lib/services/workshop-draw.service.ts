@@ -4,7 +4,6 @@ import { fromEvent, merge, switchMap, takeUntil } from 'rxjs';
 import { WorkshopCoordsService } from './workshop-coords.service';
 import { WorkshopToolsService } from './workshop-tools.service';
 import { WorkshopCanvasService } from './workshop-canvas.service';
-import { WorkshopCanvasManagerService } from './workshop-canvas-manager.service';
 
 @Injectable()
 export class WorkshopDrawService {
@@ -12,9 +11,6 @@ export class WorkshopDrawService {
   #workshopCoordsService = inject(WorkshopCoordsService);
   #workshopToolsService = inject(WorkshopToolsService);
   #workshopCanvasService = inject(WorkshopCanvasService);
-  #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
-
-  drawMouseButton = this.#workshopSettingsService.drawMouseButton;
 
   canvasRef = this.#workshopCanvasService.canvasRef;
   ctx = this.#workshopCanvasService.ctx;
@@ -52,7 +48,7 @@ export class WorkshopDrawService {
   }
 
   startDrawing(e: MouseEvent) {
-    if (e.button !== this.drawMouseButton()) return;
+    if (e.button !== this.#workshopSettingsService.drawMouseButton) return;
 
     this.isDrawing = true;
 
@@ -62,7 +58,7 @@ export class WorkshopDrawService {
     );
 
     this.#workshopToolsService
-      .currentTool()
+      .currentTool
       .startDrawing(e, this.ctx, worldCoords);
   }
 
@@ -74,7 +70,7 @@ export class WorkshopDrawService {
       this.canvasRef
     );
 
-    this.#workshopToolsService.currentTool().draw(this.ctx, worldCoords);
+    this.#workshopToolsService.currentTool.draw(this.ctx, worldCoords);
   }
 
   stopDrawing(e: MouseEvent) {
@@ -87,6 +83,6 @@ export class WorkshopDrawService {
       this.canvasRef
     );
 
-    this.#workshopToolsService.currentTool().stopDrawing(worldCoords);
+    this.#workshopToolsService.currentTool.stopDrawing(worldCoords);
   }
 }

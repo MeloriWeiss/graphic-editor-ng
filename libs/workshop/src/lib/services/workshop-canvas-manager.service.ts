@@ -2,12 +2,17 @@ import { inject, Injectable } from '@angular/core';
 import { WorkshopCanvasService } from './workshop-canvas.service';
 import { WorkshopShapesService } from './workshop-shapes.service';
 import { WorkshopCoordsService } from './workshop-coords.service';
+import { fromEvent } from 'rxjs';
 
 @Injectable()
 export class WorkshopCanvasManagerService {
   #workshopCanvasService = inject(WorkshopCanvasService);
   #workshopShapesService = inject(WorkshopShapesService);
   #workshopCoordsService = inject(WorkshopCoordsService);
+
+  shapes = this.#workshopShapesService.shapes;
+  layers = this.#workshopShapesService.layers;
+  layersOrder = this.#workshopShapesService.layersOrder;
 
   clearCanvas() {
     const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
@@ -28,7 +33,10 @@ export class WorkshopCanvasManagerService {
 
     const zoom = this.#workshopCoordsService.zoom;
 
-    ctx.translate(this.#workshopCoordsService.cameraX, this.#workshopCoordsService.cameraY);
+    ctx.translate(
+      this.#workshopCoordsService.cameraX,
+      this.#workshopCoordsService.cameraY
+    );
     ctx.scale(zoom, zoom);
 
     this.render();
@@ -57,8 +65,26 @@ export class WorkshopCanvasManagerService {
     }
     // КОНЕЦ ТЕСТОВОГО ПОЛЯ ---------------------------------
 
-    for (const shape of this.#workshopShapesService.shapes) {
-      shape.draw(ctx);
+    const layers = this.layers();
+    const shapes = this.shapes();
+
+    for (const layerId of this.layersOrder()) {
+      if (!layers[layerId].visible) continue;
+
+      for (const shape of shapes) {
+        if (shape.layerId !== layerId) continue;
+
+        shape.draw(ctx);
+      }
     }
+  }
+
+  listenKeyEvents() {
+    return fromEvent<KeyboardEvent, void>(document.body, 'keydown', (e) => {
+      if (e.key === 'Delete') {
+        this.#workshopShapesService.deleteShapes();
+      }
+      this.redraw();
+    });
   }
 }

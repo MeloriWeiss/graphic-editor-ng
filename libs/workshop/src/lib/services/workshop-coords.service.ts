@@ -7,8 +7,8 @@ export class WorkshopCoordsService {
   cameraY = 0;
   #zoom = 1;
 
-  minZoom = 0.1;
-  maxZoom = 10;
+  minZoom = 0.001;
+  maxZoom = 1000;
 
   getWorldCoords(
     e: MouseEvent,

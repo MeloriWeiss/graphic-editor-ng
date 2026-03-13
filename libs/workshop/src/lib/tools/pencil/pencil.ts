@@ -58,7 +58,7 @@ export class PencilTool implements Tool {
   stopDrawing() {
     if (!this.#currentLine) return;
 
-    this.#workshopShapesService.shapes.push(this.#currentLine);
+    this.#workshopShapesService.addShape(this.#currentLine);
     this.#currentLine = null;
   }
 }

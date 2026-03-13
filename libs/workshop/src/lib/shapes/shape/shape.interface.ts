@@ -3,10 +3,11 @@ import { SelectionRect } from '../../tools';
 import { Point } from '../../interfaces';
 
 export interface BaseShape {
-  selected?: boolean;
   strokeColor: string;
   opacity: number;
   strokeWidth: number;
+  selected?: boolean;
+  layerId?: string;
 }
 
 export interface ShapeActions {

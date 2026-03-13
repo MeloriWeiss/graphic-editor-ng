@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { SvgComponent } from '../svg/svg.component';
-import { SliderItem } from '@ge/data-access/shared';
+import { SliderItemInterface } from '@ge/data-access/shared';
 
 @Component({
   selector: 'ge-images-slider',
@@ -12,5 +12,5 @@ import { SliderItem } from '@ge/data-access/shared';
 })
 export class ImagesSliderComponent {
   options = input.required<OwlOptions>();
-  slides = input.required<SliderItem[]>();
+  slides = input.required<SliderItemInterface[]>();
 }

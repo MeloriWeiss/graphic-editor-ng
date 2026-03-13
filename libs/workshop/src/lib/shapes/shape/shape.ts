@@ -5,6 +5,7 @@ export class BaseShapeShape implements BaseShape {
   opacity = 1;
   strokeWidth = 1;
   selected = false;
+  layerId?: string;
 
   constructor(params: BaseShape) {
     this.strokeColor = params.strokeColor;

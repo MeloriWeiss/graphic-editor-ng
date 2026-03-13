@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   EraserTool,
   PencilTool,
@@ -17,9 +17,9 @@ export class WorkshopToolsService {
     [WorkshopTools.RECTANGLE]: new RectangleTool(),
   }
 
-  currentTool = signal<Tool>(this.#instruments[WorkshopTools.RECTANGLE]);
+  currentTool = this.#instruments[WorkshopTools.RECTANGLE];
 
   setCurrentTool(newTool: WorkshopTools) {
-    this.currentTool.set(this.#instruments[newTool]);
+    this.currentTool = this.#instruments[newTool];
   }
 }

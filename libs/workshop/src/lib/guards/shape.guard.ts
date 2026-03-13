@@ -1,10 +1,12 @@
 import { ShapesTypes } from '../consts';
-import { Line, Rectangle, Shape } from '../shapes';
+import { ShapesData } from '../interfaces';
+import { RectangleCreateData } from '../shapes/rectangle/rectangle.interface';
+import { LineCreateData } from '../shapes/line/line.interface';
 
-export const isRectangle = (shape: Shape): shape is Rectangle => {
+export const isRectangle = (shape: ShapesData): shape is RectangleCreateData => {
   return shape.type === ShapesTypes.RECTANGLE;
 };
 
-export const isLine = (shape: Shape): shape is Line => {
+export const isLine = (shape: ShapesData): shape is LineCreateData => {
   return shape.type === ShapesTypes.LINE;
 }

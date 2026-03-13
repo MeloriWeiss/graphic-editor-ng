@@ -14,12 +14,9 @@ export class WorkshopPanningService {
   #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
   #workshopCanvasService = inject(WorkshopCanvasService);
 
-  panningMouseButton = this.#workshopSettingsService.panningMouseButton;
-
   #width!: number;
   #height!: number;
 
-  // Для панорамирования
   isPanning = false;
   panStartX = 0;
   panStartY = 0;
@@ -102,7 +99,7 @@ export class WorkshopPanningService {
     }
 
     zoom = this.#workshopCoordsService.zoom;
-    // Зум в точке курсора
+
     const rect =
       this.#workshopDrawService.canvasRef.nativeElement.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
@@ -118,7 +115,7 @@ export class WorkshopPanningService {
   }
 
   onMouseDown(e: MouseEvent) {
-    if (e.button !== this.panningMouseButton()) return;
+    if (e.button !== this.#workshopSettingsService.panningMouseButton) return;
 
     this.isPanning = true;
     this.panStartX = e.clientX;

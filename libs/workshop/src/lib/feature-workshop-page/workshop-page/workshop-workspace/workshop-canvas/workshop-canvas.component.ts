@@ -10,10 +10,13 @@ import {
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  WorkshopCanvasManagerService,
   WorkshopCanvasService,
   WorkshopDrawService,
   WorkshopPanningService,
+  WorkshopShapesService,
 } from '../../../../services';
+import { firstValueFrom, forkJoin, merge, switchMap } from 'rxjs';
 
 @Component({
   selector: 'ge-workshop-canvas',
@@ -26,9 +29,15 @@ export class WorkshopCanvasComponent implements AfterViewInit {
   #destroyRef = inject(DestroyRef);
   #workshopDrawService = inject(WorkshopDrawService);
   #workshopCanvasService = inject(WorkshopCanvasService);
+  #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
   #workshopPanningService = inject(WorkshopPanningService);
+  #workshopShapesService = inject(WorkshopShapesService);
 
   canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
+
+  constructor() {
+    this.handleShapes();
+  }
 
   ngAfterViewInit() {
     const canvasRef = this.canvasRef();
@@ -43,8 +52,19 @@ export class WorkshopCanvasComponent implements AfterViewInit {
     this.#workshopCanvasService.ctx = canvasContext;
 
     this.setupCanvas();
-    this.listenCanvasManagementEvents();
-    this.listenDrawEvents();
+    this.listenCanvasEvents();
+  }
+
+  handleShapes() {
+    firstValueFrom(
+      this.#workshopShapesService.getLayers().pipe(
+        switchMap(() => {
+          return this.#workshopShapesService.getShapes();
+        })
+      )
+    ).then();
+
+    this.#workshopShapesService.saves$.pipe(takeUntilDestroyed()).subscribe();
   }
 
   setupCanvas() {
@@ -54,16 +74,12 @@ export class WorkshopCanvasComponent implements AfterViewInit {
     this.#workshopPanningService.resizeCanvas();
   }
 
-  listenDrawEvents() {
-    this.#workshopDrawService
-      .listenDrawEvents()
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe();
-  }
-
-  listenCanvasManagementEvents() {
-    this.#workshopPanningService
-      .listenCanvasManagementEvents()
+  listenCanvasEvents() {
+    merge(
+      this.#workshopDrawService.listenDrawEvents(),
+      this.#workshopPanningService.listenCanvasManagementEvents(),
+      this.#workshopCanvasManagerService.listenKeyEvents()
+    )
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe();
   }

@@ -91,7 +91,7 @@ export class RectangleTool implements Tool {
   stopDrawing() {
     if (!this.#currentRect) return;
 
-    this.#workshopShapesService.shapes.push(this.#currentRect);
+    this.#workshopShapesService.addShape(this.#currentRect);
     this.#currentRect = null;
   }
 }

@@ -12,6 +12,8 @@ export class SelectTool implements Tool {
   #workshopShapesService = inject(WorkshopShapesService);
   #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
 
+  shapes = this.#workshopShapesService.shapes;
+
   #selectionRect: SelectionRect | null = null;
 
   #selectedShapes: Shape[] = [];
@@ -29,7 +31,8 @@ export class SelectTool implements Tool {
     this.#lastY = startPoint.y;
 
     if (e.shiftKey) {
-      for (const shape of this.#workshopShapesService.shapes) {
+      for (const shape of this.shapes()) {
+        if (!this.#workshopShapesService.isShapeVisible(shape)) continue;
         if (shape.selected) continue;
 
         const selected = shape.selectByClick(startPoint);
@@ -53,7 +56,9 @@ export class SelectTool implements Tool {
     this.#selectedShapes = [];
     this.#selection = true;
 
-    for (const shape of this.#workshopShapesService.shapes) {
+    for (const shape of this.shapes()) {
+      if (!this.#workshopShapesService.isShapeVisible(shape)) continue;
+
       const selected = shape.selectByClick(startPoint);
 
       if (selected) this.#selectedShapes.push(shape);
@@ -72,7 +77,8 @@ export class SelectTool implements Tool {
     this.#workshopCanvasManagerService.redraw();
 
     if (this.#selectedShapes.length && !this.#selection) {
-      for (const shape of this.#workshopShapesService.shapes) {
+      for (const shape of this.shapes()) {
+        if (!this.#workshopShapesService.isShapeVisible(shape)) continue;
         if (!shape.selected) continue;
 
         shape.changePosition({
@@ -113,7 +119,9 @@ export class SelectTool implements Tool {
 
     this.#selectedShapes = [];
 
-    for (const shape of this.#workshopShapesService.shapes) {
+    for (const shape of this.shapes()) {
+      if (!this.#workshopShapesService.isShapeVisible(shape)) continue;
+
       const selected = shape.selectByDraw({
         x: rectX,
         y: rectY,
@@ -126,11 +134,11 @@ export class SelectTool implements Tool {
   }
 
   stopDrawing() {
-    if (!this.#selectionRect) return;
-
     this.#selection = false;
 
-    this.#workshopCanvasManagerService.render();
+    this.#workshopCanvasManagerService.redraw();
+
+    this.#workshopShapesService.saveShapes();
 
     this.#selectionRect = null;
   }
