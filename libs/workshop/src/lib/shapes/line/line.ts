@@ -40,7 +40,23 @@ export class LineShape extends BaseShapeShape implements Line {
     ctx.stroke();
   }
 
-  clickOn() {
+  clickOn(point: Point) {
+    for (let i = 0; i < this.points.length - 1; i++) {
+      const p1 = this.points[i];
+      const p2 = this.points[i + 1];
+
+      const distance = this.getDistancePointToSegment(
+        point.x,
+        point.y,
+        p1.x,
+        p1.y,
+        p2.x,
+        p2.y
+      );
+
+      if (distance <= this.#selectThreshold) return true;
+    }
+
     return false;
   }
 
@@ -49,7 +65,7 @@ export class LineShape extends BaseShapeShape implements Line {
       const p1 = this.points[i];
       const p2 = this.points[i + 1];
 
-      const distance = getDistancePointToSegment(
+      const distance = this.getDistancePointToSegment(
         point.x,
         point.y,
         p1.x,
@@ -64,30 +80,6 @@ export class LineShape extends BaseShapeShape implements Line {
       } else {
         this.selected = false;
       }
-    }
-
-    function getDistancePointToSegment(
-      px: number,
-      py: number,
-      x1: number,
-      y1: number,
-      x2: number,
-      y2: number
-    ) {
-      const lineLengthSquared = (x2 - x1) ** 2 + (y2 - y1) ** 2;
-
-      if (lineLengthSquared === 0) {
-        return Math.hypot(px - x1, py - y1);
-      }
-
-      let t =
-        ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / lineLengthSquared;
-      t = Math.max(0, Math.min(1, t));
-
-      const closestX = x1 + t * (x2 - x1);
-      const closestY = y1 + t * (y2 - y1);
-
-      return Math.hypot(px - closestX, py - closestY);
     }
 
     return this.selected;
@@ -118,6 +110,58 @@ export class LineShape extends BaseShapeShape implements Line {
   }
 
   changePosition(point: Point) {
+    for (const p of this.points) {
+      p.x = p.x + point.x;
+      p.y = p.y + point.y;
+    }
+  }
 
+  getBounds() {
+    if (this.points.length === 0) {
+      return { x: 0, y: 0, width: 0, height: 0 };
+    }
+
+    let minX = this.points[0].x;
+    let maxX = this.points[0].x;
+    let minY = this.points[0].y;
+    let maxY = this.points[0].y;
+
+    for (let i = 1; i < this.points.length; i++) {
+      const p = this.points[i];
+      if (p.x < minX) minX = p.x;
+      if (p.x > maxX) maxX = p.x;
+      if (p.y < minY) minY = p.y;
+      if (p.y > maxY) maxY = p.y;
+    }
+
+    return {
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY,
+    };
+  }
+
+  getDistancePointToSegment(
+    px: number,
+    py: number,
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number
+  ) {
+    const lineLengthSquared = (x2 - x1) ** 2 + (y2 - y1) ** 2;
+
+    if (lineLengthSquared === 0) {
+      return Math.hypot(px - x1, py - y1);
+    }
+
+    let t = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / lineLengthSquared;
+    t = Math.max(0, Math.min(1, t));
+
+    const closestX = x1 + t * (x2 - x1);
+    const closestY = y1 + t * (y2 - y1);
+
+    return Math.hypot(px - closestX, py - closestY);
   }
 }

@@ -17,7 +17,15 @@ export class PencilTool implements Tool {
   #lastX = 0;
   #lastY = 0;
 
-  startDrawing(e: MouseEvent, ctx: CanvasRenderingContext2D, startPoint: Point) {
+  minRequiredParams = {
+    length: 10,
+  };
+
+  startDrawing(
+    e: MouseEvent,
+    ctx: CanvasRenderingContext2D,
+    startPoint: Point
+  ) {
     const worldX = startPoint.x;
     const worldY = startPoint.y;
 
@@ -56,9 +64,27 @@ export class PencilTool implements Tool {
   }
 
   stopDrawing() {
-    if (!this.#currentLine) return;
+    if (!this.#currentLine || !this.enabledToCreate()) return;
 
     this.#workshopShapesService.addShape(this.#currentLine);
     this.#currentLine = null;
+  }
+
+  enabledToCreate() {
+    if (!this.#currentLine || this.#currentLine.points.length < 2) return false;
+
+    const points = this.#currentLine.points;
+
+    let length = 0;
+
+    for (let i = 1; i < points.length; i++) {
+      const { x: x1, y: y1 } = points[i - 1];
+      const { x: x2, y: y2 } = points[i];
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      length += Math.hypot(dx, dy);
+    }
+
+    return length > this.minRequiredParams.length;
   }
 }

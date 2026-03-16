@@ -10,7 +10,9 @@ import {
   WorkshopShapesService,
   WorkshopCanvasManagerService,
   WorkshopCanvasService,
+  WorkshopQuadtreeService,
 } from '../../services';
+import { WorkshopShapesStorageService } from '../../services';
 
 @Component({
   selector: 'ge-workshop-page',
@@ -24,8 +26,10 @@ import {
     WorkshopCoordsService,
     WorkshopToolsService,
     WorkshopShapesService,
+    WorkshopShapesStorageService,
     WorkshopCanvasManagerService,
     WorkshopCanvasService,
+    WorkshopQuadtreeService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

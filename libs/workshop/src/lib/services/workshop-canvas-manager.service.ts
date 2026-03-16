@@ -3,16 +3,23 @@ import { WorkshopCanvasService } from './workshop-canvas.service';
 import { WorkshopShapesService } from './workshop-shapes.service';
 import { WorkshopCoordsService } from './workshop-coords.service';
 import { fromEvent } from 'rxjs';
+import { WorkshopShapesStorageService } from './workshop-shapes-storage.service';
+import { WorkshopQuadtreeService } from './workshop-quadtree.service';
 
 @Injectable()
 export class WorkshopCanvasManagerService {
   #workshopCanvasService = inject(WorkshopCanvasService);
   #workshopShapesService = inject(WorkshopShapesService);
+  #workshopShapesStorageService = inject(WorkshopShapesStorageService);
   #workshopCoordsService = inject(WorkshopCoordsService);
+  #quadtreeService = inject(WorkshopQuadtreeService);
 
-  shapes = this.#workshopShapesService.shapes;
-  layers = this.#workshopShapesService.layers;
-  layersOrder = this.#workshopShapesService.layersOrder;
+  shapes = this.#workshopShapesStorageService.shapes;
+  layers = this.#workshopShapesStorageService.layers;
+  layersOrder = this.#workshopShapesStorageService.layersOrder;
+
+  #frameScheduled = false;
+  #dirtyForRedraw = false;
 
   clearCanvas() {
     const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
@@ -34,8 +41,8 @@ export class WorkshopCanvasManagerService {
     const zoom = this.#workshopCoordsService.zoom;
 
     ctx.translate(
-      this.#workshopCoordsService.cameraX,
-      this.#workshopCoordsService.cameraY
+      -this.#workshopCoordsService.cameraX,
+      -this.#workshopCoordsService.cameraY
     );
     ctx.scale(zoom, zoom);
 
@@ -68,15 +75,64 @@ export class WorkshopCanvasManagerService {
     const layers = this.layers();
     const shapes = this.shapes();
 
-    for (const layerId of this.layersOrder()) {
-      if (!layers[layerId].visible) continue;
 
-      for (const shape of shapes) {
-        if (shape.layerId !== layerId) continue;
+    // рендерим через quadtree
+    // let count = 0;
+    // const visible = this.#quadtreeService.retrieve(
+    //   this.#workshopCoordsService.worldViewport
+    // );
+    // for (const item of visible) {
+    //   item.data.draw(ctx);
+    //   count++;
+    // }
+    // console.log(count);
 
+    // рендерим видимое
+    let count = 0;
+    for (const shape of shapes) {
+      if (
+        this.#quadtreeService.intersects(shape.getBounds(), this.#workshopCoordsService.worldViewport)
+      ) {
         shape.draw(ctx);
+        count++;
       }
     }
+    console.log(count);
+
+    // рендерим всё
+    // let count = 0;
+    // for (const shape of shapes) {
+    //   count++;
+    //   shape.draw(ctx);
+    // }
+    // console.log(count);
+
+    // рендерим всё со слоями
+    // for (const layerId of this.layersOrder()) {
+    //   if (!layers[layerId].visible) continue;
+    //
+    //   for (const shape of shapes) {
+    //     if (shape.layerId !== layerId) continue;
+    //
+    //     shape.draw(ctx);
+    //   }
+    // }
+  }
+
+  requestRedraw() {
+    this.#dirtyForRedraw = true;
+
+    if (this.#frameScheduled) return;
+    this.#frameScheduled = true;
+
+    requestAnimationFrame(() => {
+      this.#frameScheduled = false;
+
+      if (!this.#dirtyForRedraw) return;
+      this.#dirtyForRedraw = false;
+
+      this.redraw();
+    });
   }
 
   listenKeyEvents() {

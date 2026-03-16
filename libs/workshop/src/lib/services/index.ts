@@ -6,6 +6,8 @@ import { WorkshopSettingsService } from './workshop-settings.service';
 import { WorkshopShapesService } from './workshop-shapes.service';
 import { WorkshopCanvasManagerService } from './workshop-canvas-manager.service';
 import { WorkshopCanvasService } from './workshop-canvas.service';
+import { WorkshopShapesStorageService } from './workshop-shapes-storage.service';
+import { WorkshopQuadtreeService } from './workshop-quadtree.service';
 
 export {
   WorkshopDrawService,
@@ -16,4 +18,6 @@ export {
   WorkshopShapesService,
   WorkshopCanvasManagerService,
   WorkshopCanvasService,
+  WorkshopShapesStorageService,
+  WorkshopQuadtreeService,
 };

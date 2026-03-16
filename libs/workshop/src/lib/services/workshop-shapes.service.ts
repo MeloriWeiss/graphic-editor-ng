@@ -1,19 +1,25 @@
-import { computed, Injectable, signal } from '@angular/core';
-import { LineShape, RectangleShape, Shape } from '../shapes';
+import { inject, Injectable } from '@angular/core';
+import { LineShape, Rectangle, RectangleShape, Shape } from '../shapes';
 import { debounceTime, interval, merge, of, Subject, switchMap } from 'rxjs';
 import { Layers, LayersStorage, ShapesData } from '../interfaces';
 import { isLine, isRectangle } from '../guards';
+import { WorkshopShapesStorageService } from './workshop-shapes-storage.service';
+import { ShapesTypes } from '../consts';
+import { WorkshopQuadtreeService } from './workshop-quadtree.service';
 
 @Injectable()
 export class WorkshopShapesService {
-  shapes = signal<Shape[]>([]);
-  layers = signal<Layers>({});
+  #shapesStorageService = inject(WorkshopShapesStorageService);
+  #quadtreeService = inject(WorkshopQuadtreeService);
 
-  layersCount = computed(() => Object.keys(this.layers()).length);
-  firstLayerId = computed(() => Object.keys(this.layers())[0]);
+  shapes = this.#shapesStorageService.shapes;
+  layers = this.#shapesStorageService.layers;
 
-  layersOrder = signal<string[]>([]);
-  activeLayerId = signal<string | null>(null);
+  layersCount = this.#shapesStorageService.layersCount;
+  firstLayerId = this.#shapesStorageService.firstLayerId;
+
+  layersOrder = this.#shapesStorageService.layersOrder;
+  activeLayerId = this.#shapesStorageService.activeLayerId;
 
   defaultLayer: Layers | null = null;
 
@@ -40,6 +46,9 @@ export class WorkshopShapesService {
   saves$ = merge(this.#shapesSaves$, this.#layersSaves$);
 
   getShapes() {
+    // this.generateTestShapes(50000);
+    // return of([]);
+
     const shapes = localStorage.getItem('shapes');
 
     if (!shapes) {
@@ -69,7 +78,8 @@ export class WorkshopShapesService {
   }
 
   addShape(shape: Shape) {
-    shape.layerId = this.activeLayerId() ?? Object.values(this.defaultLayer ?? {})[0].id;
+    shape.layerId =
+      this.activeLayerId() ?? Object.values(this.defaultLayer ?? {})[0].id;
 
     this.shapes.update((shapes) => [...shapes, shape]);
 
@@ -108,7 +118,7 @@ export class WorkshopShapesService {
       ...newLayer,
     }));
     this.activeLayerId.set(layerId);
-    this.layersOrder.update(order => [...order, layerId]);
+    this.layersOrder.update((order) => [...order, layerId]);
 
     this.#saveLayers();
   }
@@ -127,7 +137,7 @@ export class WorkshopShapesService {
     if (this.activeLayerId() === layerId) {
       this.activeLayerId.set(this.firstLayerId() ?? null);
     }
-    this.layersOrder.update(order => order.filter(id => id !== layerId));
+    this.layersOrder.update((order) => order.filter((id) => id !== layerId));
 
     this.#saveLayers();
   }
@@ -360,5 +370,37 @@ export class WorkshopShapesService {
     }
 
     return of();
+  }
+
+  generateTestShapes(count: number) {
+    const shapes: Shape[] = [];
+    for (let i = 0; i < count; i++) {
+      shapes.push(createRandomRect(`rect-${i}`, 10000, 10000));
+    }
+    this.#shapesStorageService.shapes.set(shapes);
+    this.#quadtreeService.rebuildQuadtree();
+
+    function createRandomRect(
+      id: string,
+      worldWidth: number,
+      worldHeight: number
+    ): Rectangle {
+      const width = 20 + Math.random() * 80;
+      const height = 20 + Math.random() * 80;
+      const x = Math.random() * (worldWidth - width);
+      const y = Math.random() * (worldHeight - height);
+
+      return new RectangleShape({
+        x,
+        y,
+        width,
+        height,
+        type: ShapesTypes.RECTANGLE,
+        strokeColor: '#000000',
+        fillColor: '#BD404030',
+        strokeWidth: 1,
+        opacity: 1,
+      });
+    }
   }
 }

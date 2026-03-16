@@ -14,13 +14,18 @@ export class RectangleTool implements Tool {
 
   #currentRect: Rectangle | null = null;
 
-  #startX!: number;
-  #startY!: number;
-
   strokeColor = '#000000';
   fillColor = '#BD404030';
   strokeWidth = 1;
   opacity = 1;
+
+  #startX!: number;
+  #startY!: number;
+
+  minRequiredParams = {
+    width: 10,
+    height: 10,
+  };
 
   startDrawing(
     e: MouseEvent,
@@ -89,9 +94,18 @@ export class RectangleTool implements Tool {
   }
 
   stopDrawing() {
-    if (!this.#currentRect) return;
+    if (!this.#currentRect || !this.enabledToCreate()) return;
 
     this.#workshopShapesService.addShape(this.#currentRect);
     this.#currentRect = null;
+  }
+
+  enabledToCreate() {
+    if (!this.#currentRect) return false;
+
+    return (
+      this.#currentRect.width > this.minRequiredParams.width &&
+      this.#currentRect.height > this.minRequiredParams.height
+    );
   }
 }

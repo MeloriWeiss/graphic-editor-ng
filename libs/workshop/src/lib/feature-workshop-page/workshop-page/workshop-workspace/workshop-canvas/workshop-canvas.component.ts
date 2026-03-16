@@ -70,8 +70,7 @@ export class WorkshopCanvasComponent implements AfterViewInit {
   setupCanvas() {
     this.#workshopCanvasService.ctx.lineCap = 'round';
 
-    this.#workshopPanningService.centerCanvas();
-    this.#workshopPanningService.resizeCanvas();
+    this.#workshopPanningService.prepareCanvas();
   }
 
   listenCanvasEvents() {

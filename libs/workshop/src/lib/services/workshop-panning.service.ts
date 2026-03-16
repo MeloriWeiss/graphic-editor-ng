@@ -14,8 +14,8 @@ export class WorkshopPanningService {
   #workshopCanvasManagerService = inject(WorkshopCanvasManagerService);
   #workshopCanvasService = inject(WorkshopCanvasService);
 
-  #width!: number;
-  #height!: number;
+  canvasWidth = 0;
+  canvasHeight = 0;
 
   isPanning = false;
   panStartX = 0;
@@ -55,7 +55,7 @@ export class WorkshopPanningService {
   }
 
   listenResizeEvent() {
-    return fromEvent(window, 'resize', () => this.resizeCanvas());
+    return fromEvent(window, 'resize', () => this.#resizeCanvas());
   }
 
   listenCanvasManagementEvents() {
@@ -66,21 +66,45 @@ export class WorkshopPanningService {
     return merge(panningEvents$, zoomEvent$, resizeEvent$);
   }
 
-  resizeCanvas() {
-    const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
-
-    this.#width = window.innerWidth;
-    this.#height = window.innerHeight;
-
-    canvas.width = this.#width - 350;
-    canvas.height = this.#height - 37;
+  prepareCanvas() {
+    this.#resizeCanvas(false);
+    this.#centerCanvas(false);
+    this.#updateViewport(false);
 
     this.redraw();
   }
 
-  centerCanvas() {
-    this.#workshopCoordsService.cameraX = window.innerWidth / 2;
-    this.#workshopCoordsService.cameraY = window.innerHeight / 2;
+  #resizeCanvas(redraw = true) {
+    const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
+
+    this.canvasWidth = window.innerWidth - 350;
+    this.canvasHeight = window.innerHeight - 37;
+
+    canvas.width = this.canvasWidth;
+    canvas.height = this.canvasHeight;
+
+    if (redraw) this.redraw();
+  }
+
+  #centerCanvas(redraw = true) {
+    this.#workshopCoordsService.cameraX = -this.canvasWidth / 2;
+    this.#workshopCoordsService.cameraY = -this.canvasHeight / 2;
+
+    if (redraw) this.redraw();
+  }
+
+  #updateViewport(redraw = true) {
+    const canvas = this.#workshopCanvasService.canvasRef.nativeElement;
+
+    this.#workshopCoordsService.updateViewport(
+      this.#workshopCoordsService.cameraX,
+      this.#workshopCoordsService.cameraY,
+      this.#workshopCoordsService.zoom,
+      canvas.width,
+      canvas.height
+    );
+
+    if (redraw) this.#workshopCanvasManagerService.requestRedraw();
   }
 
   onWheel(e: WheelEvent) {
@@ -92,6 +116,7 @@ export class WorkshopPanningService {
 
     const zoomFactor = 1.1;
     const oldZoom = zoom;
+
     if (e.deltaY < 0) {
       this.#workshopCoordsService.zoom *= zoomFactor;
     } else {
@@ -102,8 +127,8 @@ export class WorkshopPanningService {
 
     const rect =
       this.#workshopDrawService.canvasRef.nativeElement.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const mouseX = rect.left - e.clientX;
+    const mouseY = rect.top - e.clientY;
 
     const worldX = (mouseX - this.#workshopCoordsService.cameraX) / oldZoom;
     const worldY = (mouseY - this.#workshopCoordsService.cameraY) / oldZoom;
@@ -111,7 +136,7 @@ export class WorkshopPanningService {
     this.#workshopCoordsService.cameraX -= (zoom - oldZoom) * worldX;
     this.#workshopCoordsService.cameraY -= (zoom - oldZoom) * worldY;
 
-    this.redraw();
+    this.#updateViewport();
   }
 
   onMouseDown(e: MouseEvent) {
@@ -131,12 +156,12 @@ export class WorkshopPanningService {
   onMouseMove(e: MouseEvent) {
     if (!this.isPanning) return;
 
-    const deltaX = e.clientX - this.panStartX;
-    const deltaY = e.clientY - this.panStartY;
+    const deltaX = this.panStartX - e.clientX;
+    const deltaY = this.panStartY - e.clientY;
     this.#workshopCoordsService.cameraX = this.cameraStartX + deltaX;
     this.#workshopCoordsService.cameraY = this.cameraStartY + deltaY;
 
-    this.redraw();
+    this.#updateViewport();
   }
 
   redraw() {

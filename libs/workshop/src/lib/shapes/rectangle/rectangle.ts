@@ -93,4 +93,13 @@ export class RectangleShape extends BaseShapeShape implements Rectangle {
     this.x = this.x + point.x;
     this.y = this.y + point.y;
   }
+
+  getBounds() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height
+    };
+  }
 }

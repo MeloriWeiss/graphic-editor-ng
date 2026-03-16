@@ -1,5 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Point } from '../interfaces/point.interface';
+import { Bounds } from '../interfaces';
 
 @Injectable()
 export class WorkshopCoordsService {
@@ -7,19 +8,21 @@ export class WorkshopCoordsService {
   cameraY = 0;
   #zoom = 1;
 
-  minZoom = 0.001;
-  maxZoom = 1000;
+  worldViewport: Bounds = { x: 0, y: 0, width: 0, height: 0 };
+
+  minZoom = 0.1;
+  maxZoom = 10;
 
   getWorldCoords(
     e: MouseEvent,
     canvasRef: ElementRef<HTMLCanvasElement>
   ): Point {
     const rect = canvasRef.nativeElement.getBoundingClientRect();
-    const screenX = e.clientX - rect.left;
-    const screenY = e.clientY - rect.top;
+    const screenX = rect.left - e.clientX;
+    const screenY = rect.top - e.clientY;
 
-    const x = (screenX - this.cameraX) / this.#zoom;
-    const y = (screenY - this.cameraY) / this.#zoom;
+    const x = (this.cameraX - screenX) / this.#zoom;
+    const y = (this.cameraY - screenY) / this.#zoom;
 
     return { x, y };
   }
@@ -32,5 +35,14 @@ export class WorkshopCoordsService {
     if (newZoom > this.maxZoom || newZoom < this.minZoom) return;
 
     this.#zoom = newZoom;
+  }
+
+  updateViewport(cameraX: number, cameraY: number, zoom: number, canvasW: number, canvasH: number) {
+    this.worldViewport = {
+      x: cameraX / zoom,
+      y: cameraY / zoom,
+      width: canvasW / zoom,
+      height: canvasH / zoom
+    };
   }
 }
